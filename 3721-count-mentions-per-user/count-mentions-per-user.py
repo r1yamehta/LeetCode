@@ -6,20 +6,17 @@ class Solution:
         off_until=[0]*numberOfUsers
         online=[True]*numberOfUsers
         
-        for event in events_sorted:
-            etype=event[0]
-            timestamp=int(event[1])
-            data=event[2]
+        for etype,timestamp,data in events_sorted:
 
             for i in range(numberOfUsers):
-                if not online[i] and timestamp>=off_until[i]:
+                if not online[i] and int(timestamp)>=off_until[i]:
                     online[i]=True
                     off_until[i]=0
 
             if etype=='OFFLINE':
                 user=int(data)
                 online[user]=False
-                off_until[user]=timestamp+60
+                off_until[user]=int(timestamp)+60
 
             else:
                 if data=="ALL":
